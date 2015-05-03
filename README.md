@@ -1,17 +1,15 @@
 # What is this
 short story about this code 
 
-### plot
-
-### action
+### introduction
 
 We were runing services that often needed to read some text files, do some logic on this data
 and return response. Not that we were super stupid, business reqeirement demanded it. Apps generaly 
 need external services and data which are time expensive, but sometimes that price is not very obvious.
- Since spring 3.1 there is mighty @Cacheable annotation that twists your calls to cache fetches and 
- improves your performace by order of magintude instantly. Actualy it is sooo cooool that you take it 
- for granted and use if for everything and you want it to work in every situation. I mean file is loaded, 
- content processed and put to cache for 10 minutes, and somebody delete it by mistake after 2 minutes,
+Since spring 3.1 there is mighty @Cacheable annotation that twists your calls to cache fetches and 
+improves your performace by order of magintude instantly. Actualy it is sooo cooool that you take it 
+for granted and use if for everything and you want it to work in every situation. I mean file is loaded, 
+content processed and put to cache for 10 minutes, and somebody delete it by mistake after 2 minutes,
 your method will for next 8 minutes return good stuff, how cool is that! I remember me, spolied brat, saying 
 minutes are short, i want this to last, i want this cache to hold last valid cache while i am playing with configuration files.
 I want to be able mess things up and service to continue work. Sounds pretty sane right. If value can stay in 
@@ -159,4 +157,4 @@ public class PreserveValidCacheAspect {
 
 Thing with this class is that it needs debug information during runtime, because we need to evaluate cache key after service call. In my case 
 methods did have complex arguments. @Cacheable evaluate keys with spring Expression Language, very easy to implement but you have to be sure 
-that you have debug information during runtime of your app.
+that you have debug information during runtime of your app. 
