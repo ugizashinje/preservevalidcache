@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+	updateCheck="false">
+
+	<cache name="simple" maxBytesLocalHeap="1M" eternal="false"
+		timeToIdleSeconds="1" diskPersistent="false" timeToLiveSeconds="1"
+		memoryStoreEvictionPolicy="LRU">
+
+		<cacheEventListenerFactory class="org.ugizashinje.main.SBapiCacheListenerFactory"/>
+	</cache>
+</ehcache>
+
