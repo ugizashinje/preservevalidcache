@@ -33,25 +33,25 @@ same fields like Cacheable and simple Aspect around it.
 
 first you have to enable in application context.
 
-'''
+```
 <aop:aspectj-autoproxy />
-'''
+```
 
 then define your Annontation
 
-'''java
+```java
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PreserveValidCache {
 	public String value();
 	public String 	key();
 }
-'''
+```
 
 
 Keep your fields same, so you can easely move from @Cacheable to @PreserveValidCache.
 
-'''java
+```java
 
 package org.ugizashinje.main;
 
@@ -155,7 +155,7 @@ public class PreserveValidCacheAspect {
 
 }
 
-'''
+```
 
 Thing with this class is that it needs debug information during runtime, because we need to evaluate cache key after service call. In my case 
 methods did have complex arguments 
