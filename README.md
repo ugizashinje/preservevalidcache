@@ -2,31 +2,28 @@
 short story about this code 
 
 ### introduction
-
+but
 We were runing services that often needed to read some text files, do some logic on this data
-and return response. Not that we were super stupid, we were limited by the guys on the other end. Apps generaly 
-need external services and data which are time expensive, but sometimes that price is not very obvious.
+and return response. Not that we were super stupid, we were limited by the other end. Apps generaly 
+need external services and data which are time expensive, this situation is common just performance problem is very obvious.
 Since spring 3.1 there is mighty @Cacheable annotation that twists your calls to cache fetches and 
-improves your performace by order of magintude instantly. Actualy it is sooo cooool that you take it 
+improves your performance by order of magintude instantly. Actualy it is sooo cooool that you take it 
 for granted and use if for everything and you want it to work in every situation. I mean file is loaded, 
-content processed and put to cache for 10 minutes from where it is served instantly without computation. 
-If cache entry is evict service is called again and new value placed to cache. This approach some hidden benefits.
-If file is corrupted your service will return valid cache value for some time. I remember me, spolied brat, saying 
-minutes are short, i want this to last! I want this cache to hold last valid cache while i am messing with configuration files.
-Sounds pretty sane right. If value can stay in cache for 10 minutes why would not it stand until config files are fixed? 
-What is problem with that? Problem is in cache, fundamentaly. Cache is small portion of memory that serves 
-frequently requested data. Not any data, not any time. Hour ago some data was frequent, now it is not and must be expeled 
+content processed and put to cache for 10 minutes from where it is served instantly without computation. How cool it that?!
+This approach some hidden benefits. If file is corrupted your service will return valid cache value for some time. 
+I remember me, spolied brat, saying minutes are short, I want this to last! I want this cache to hold last valid state while I
+am messing with configuration files. Sounds pretty sane, right? If value can stay in cache for 10 minutes why would not 
+it stand until config files are fixed? What is problem with that? Problem is in cache, fundamentaly. Cache is small portion of memory 
+that serves frequently requested data. Not any data, not any time. Hour ago some data was frequent, now it is not and must be evicted
 to make room for data frequent at this very moment. This is in coalision with requerements. I want data to be stored 
 for unknown time until it is requested again, then it should return new value or last valid state. Cache won't do it, 
-it will expell it after some time, or in case of permenent cache it will never try to load value from old file. 
-So what should i do? Ditch ehCache just like that? What about logic? Some methods create cache keys from arguments, 
-do it your own way. I was looking for solutions on web, few posts i've found related to this problem looked 
-more like carbonara or amatriciana then explanation how to solve my problem. First i tried to use cacheManager for this,
-but it was dead end. Eviction event is fired only when conditions are met, entry may reside in memory indefinety, very unreliable. 
+it will expell it after some time, or in case of permenent cache it will never try to load value from old file.
+You could register eviction event handler, but that is not milk and honey. Entry is evicted and service is called, then you have
+handle exception, at that time value is not in cache anymore. So what should i do? Ditch ehCache just like that? What about logic? 
+Some methods create cache keys from arguments, do it your own way. I was looking for solutions on web, few posts i've found 
+related to this problem looked more like carbonara or amatriciana then explanation how to crack this. 
 
-// TOD0 provide code for ehCache manager 
-
-I was running in circles for while, it did cross my mind to implement it on my own but it seemed that is such big task. 
+I was running in circles for while, it did cross my mind to implement it on my own but it seemed as a big task. 
 Eventualy i said if i don't make in day I will give it up. Actualy it was quite easy, just one simple annotation with
 same fields like Cacheable and simple Aspect around it. 
 
