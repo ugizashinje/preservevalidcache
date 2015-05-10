@@ -2,7 +2,7 @@
 short story about this code 
 
 ### introduction
-but
+
 We were runing services that often needed to read some text files, do some logic on this data
 and return response. Not that we were super stupid, we were limited by the other end. Apps generaly 
 need external services and data which are time expensive, this situation is common just performance problem is very obvious.
