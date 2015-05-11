@@ -70,16 +70,18 @@ public class PreserveValidCacheAspect {
 		String argNames[] = ((MethodSignature) pjp.getSignature())
 				.getParameterNames();
 
-		for (int i = 0; i < argNames.length; i++) {
+		for (int i = 0; i < argNames.length; i++)
+		{
 			spelContext.setVariable(argNames[i], pjp.getArgs()[i]);
 		}
 
-		log.info("From annotation " + exp.getValue(spelContext));
+		log.info("looking for cache with key " + exp.getValue(spelContext));
 		Map<String, Entry> cache = cacheMap.get(preserveValidCache.value());
 		if (cache == null){
 			cache = new ConcurrentHashMap<String, Entry>();
 			cacheMap.put(preserveValidCache.value(),cache );
 		}
+
 		String key = (String) exp.getValue(spelContext);
 		Entry entry = cache.get(key);
 		Object retVal = null;
@@ -91,7 +93,7 @@ public class PreserveValidCacheAspect {
 				} else
 					cache.get(key).touch();
 			} catch (Exception e) {
-				log.info("Exception catched within PreserveValidCacheAspect from " + pjp.getSignature());
+				log.info(pjp.getSignature() + " throwed " + e);
 			}
 			if (retVal == null) {
 				retVal = cache.get(key).getValue();
