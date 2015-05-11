@@ -3,14 +3,14 @@ short story about this code
 
 ### 	
 
-We were runing services that often needed to read some text files, do some logic on this data
+   We were runing services that often needed to read some text files, do some logic on this data
 and return response. Not that we were super stupid, we were limited by the other end. Apps generaly 
 need external services and data which are time expensive, this situation is common just performance problem is very obvious.
 Since spring 3.1 there is mighty @Cacheable annotation that twists your calls to cache fetches and 
 improves your performance by order of magintude instantly. Actualy it is sooo cooool that you take it 
 for granted and use if for everything and you want it to work in every situation. I mean file is loaded, 
 content processed and put to cache for 10 minutes from where it is served instantly without computation. How cool it that?!
-This approach some hidden benefits. If file is corrupted your service will return valid cache value for some time. 
+   This approach some hidden benefits. If file is corrupted your service will return valid cache value for some time. 
 I remember me, spolied brat, saying minutes are short, I want this to last! I want this cache to hold last valid state while I
 am messing with configuration files. Sounds pretty sane, right? If value can stay in cache for 10 minutes why would not 
 it stand until config files are fixed? What is problem with that? Problem is in cache, fundamentaly. Cache is small portion of memory 
@@ -23,8 +23,7 @@ handle exception, at that time value is not in cache anymore. So what should i d
 Some methods create cache keys from arguments, they use key attribute in @Cacheable, I will have to handle this same as spring. 
 I was looking for solutions on web, few posts i've found related to this problem looked more like carbonara or amatriciana then 
 explanation how to crack this. 
-
-I was running in circles for while, it did cross my mind to implement it on my own but it seemed as a big task. 
+   I was running in circles for while, it did cross my mind to implement it on my own but it seemed as a big task. 
 Eventualy i said if i don't make in day I will give it up. Actualy it was quite easy, just one simple annotation with
 same fields like Cacheable and simple Aspect around it. 
 
