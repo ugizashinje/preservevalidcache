@@ -1,19 +1,22 @@
 package org.ugizashinje.main;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main {
 
+	private Logger log = LoggerFactory.getLogger(Main.class);
 	CachedService cachedService;
 
 	public void run() {
-		System.out.println("Main started");
+		log.info("Main started");
 		int i = 0;
 		try {
 			while (i++ < 18) {
 				Thread.sleep(300);
-				System.out.println("service call " + cachedService.getContent("xxxxx"));
+				log.info("service call " + cachedService.getContent("xxxxx"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

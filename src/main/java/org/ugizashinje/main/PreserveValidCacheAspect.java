@@ -15,6 +15,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
@@ -26,6 +28,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class PreserveValidCacheAspect {
+
+	private Logger log = LoggerFactory.getLogger(PreserveValidCache.class);
 
 	private class Entry {
 		public long timeStamp;
@@ -70,7 +74,7 @@ public class PreserveValidCacheAspect {
 			spelContext.setVariable(argNames[i], pjp.getArgs()[i]);
 		}
 
-		System.out.println("From annotation " + exp.getValue(spelContext));
+		log.info("From annotation " + exp.getValue(spelContext));
 		Map<String, Entry> cache = cacheMap.get(preserveValidCache.value());
 		if (cache == null){
 			cache = new ConcurrentHashMap<String, Entry>();
@@ -87,7 +91,7 @@ public class PreserveValidCacheAspect {
 				} else
 					cache.get(key).touch();
 			} catch (Exception e) {
-				System.out.println("Exception catched within PreserveValidCacheAspect from " + pjp.getSignature());
+				log.info("Exception catched within PreserveValidCacheAspect from " + pjp.getSignature());
 			}
 			if (retVal == null) {
 				retVal = cache.get(key).getValue();

@@ -1,7 +1,7 @@
 # What is this
 short story about this code 
 
-### introduction
+### 	
 
 We were runing services that often needed to read some text files, do some logic on this data
 and return response. Not that we were super stupid, we were limited by the other end. Apps generaly 
@@ -20,8 +20,9 @@ for unknown time until it is requested again, then it should return new value or
 it will expell it after some time, or in case of permenent cache it will never try to load value from old file.
 You could register eviction event handler, but that is not milk and honey. Entry is evicted and service is called, then you have
 handle exception, at that time value is not in cache anymore. So what should i do? Ditch ehCache just like that? What about logic? 
-Some methods create cache keys from arguments, do it your own way. I was looking for solutions on web, few posts i've found 
-related to this problem looked more like carbonara or amatriciana then explanation how to crack this. 
+Some methods create cache keys from arguments, they use key attribute in @Cacheable, I will have to handle this same as spring. 
+I was looking for solutions on web, few posts i've found related to this problem looked more like carbonara or amatriciana then 
+explanation how to crack this. 
 
 I was running in circles for while, it did cross my mind to implement it on my own but it seemed as a big task. 
 Eventualy i said if i don't make in day I will give it up. Actualy it was quite easy, just one simple annotation with

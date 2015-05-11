@@ -9,44 +9,46 @@ package org.ugizashinje.main;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.event.CacheEventListener;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
-import org.terracotta.modules.ehcache.transaction.SoftLockManagerProvider;
 
 public class SBapiCacheEventListener implements CacheEventListener {
+	private Logger log = LoggerFactory.getLogger(SBapiCacheEventListener.class);
+
 	private Map<Object, Element> oldObjects = Collections.synchronizedMap( new HashMap<Object, Element>());
 
 	@Override
 	public void notifyElementRemoved(Ehcache cache, Element el)
 			throws CacheException {
-		System.out.println("removed");
+		log.info("removed");
 	}
 
 	@Override
 	public void notifyElementPut(Ehcache cache, Element el)
 			throws CacheException {
 		if (el.getObjectValue() == null) {
-			System.out.println("	Old objects " + oldObjects);
+			log.info("	Old objects " + oldObjects);
 			cache.removeQuiet(el.getObjectKey());
 			cache.putQuiet(oldObjects.get(el.getObjectKey()));
-			System.out.println("	On Put Element: " + oldObjects.get(el.getObjectKey()));
+			log.info("	On Put Element: " + oldObjects.get(el.getObjectKey()));
 		}
 	}
 
 	@Override
 	public void notifyElementUpdated(Ehcache cache, Element el)
 			throws CacheException {
-		System.out.println("update");
+		log.info("update");
 	}
 
 	@Override
 	public void notifyElementExpired(Ehcache cache, Element el) {
-		System.out.println("On Expired Keys: " + cache.getKeys());
-		System.out.println("On Expired element : " + el.toString());
+		log.info("On Expired Keys: " + cache.getKeys());
+		log.info("On Expired element : " + el.toString());
 		el.setCreateTime();
 		oldObjects.put(el.getObjectKey(), el);
 
@@ -54,12 +56,12 @@ public class SBapiCacheEventListener implements CacheEventListener {
 
 	@Override
 	public void notifyElementEvicted(Ehcache cache, Element el) {
-		System.out.println("evicted ");
+		log.info("evicted ");
 	}
 
 	@Override
 	public void notifyRemoveAll(Ehcache cache) {
-		System.out.println("remove all");
+		log.info("remove all");
 
 	}
 
@@ -69,7 +71,7 @@ public class SBapiCacheEventListener implements CacheEventListener {
 
 	@Override
 	public SBapiCacheEventListener clone() throws CloneNotSupportedException {
-		System.out.println("clone");
+		log.info("clone");
 
 		return (SBapiCacheEventListener) super.clone();
 	}

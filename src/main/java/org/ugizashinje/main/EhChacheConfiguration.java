@@ -10,11 +10,15 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.cache.ehcache.EhCacheFactoryBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
- 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @Configuration
 @EnableCaching
 public class EhChacheConfiguration {
-     
+    private Logger log = LoggerFactory.getLogger(EhChacheConfiguration.class);
+
     @Bean
     public EhCacheManagerFactoryBean ehCahceFactory(){      
         EhCacheManagerFactoryBean ehCache = new EhCacheManagerFactoryBean();
