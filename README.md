@@ -1,6 +1,4 @@
-### How to return last valid ehcache entry? Spring @Cacheable can be very usefull, improves performance 
-### but does not protect from exceptions in underlying service. If you just had it in cache and service
-### throws exception, it is natural to return cache last state ... or maybe not.
+### How to return last valid ehcache entry? Spring @Cacheable can be very usefull, improves performance but does not protect from exceptions in underlying service. If you just had it in cache and service throws exception, it is natural to return cache last state ... or maybe not.
  
    We were runing services that often needed to read some text files, do some logic on this data
 and return response. Not a super happy situation, we were limited by the other end. Apps generaly 
